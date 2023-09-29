@@ -4,14 +4,14 @@ using namespace std;
 
 class Player{
     private :
-    string Name;
-    int WinCounter;
+    string username;
+    int WinCount;
 
     public : 
     Player();
-    Player(string name, int WinC);
-    void setName (string name);
-    string getName();
-    void setWinCounter();
-    int getWinCounter();
+    Player(string username, int WinCount);
+    void setUsername (string uname);
+    string getUsername();
+    void addWinCount();
+    int getWinCount();
 };
