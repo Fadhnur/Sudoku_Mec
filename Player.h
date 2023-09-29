@@ -8,8 +8,8 @@ class Player{
     int WinCount;
 
     public : 
-    Player();
-    Player(string uname, int WinCounter);
+    //Player();
+    //Player(string uname, int WinCounter);
     void setUsername (string uname);
     string getUsername();
     void addWinCount();
