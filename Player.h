@@ -9,7 +9,7 @@ class Player{
 
     public : 
     Player();
-    Player(string username, int WinCount);
+    Player(string uname, int WinCounter);
     void setUsername (string uname);
     string getUsername();
     void addWinCount();
