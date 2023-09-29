@@ -7,21 +7,16 @@ using namespace std;
 
 class GameManager{
     private :
-        Player p;
-        Board brd;
+        Player p;    //memanggil class dan memiliki nama objek "p"
+        Board brd;   //memanggil class dan memiliki nama objek "brd"
+        Data data;
 
     public :
         GameManager(Player plyr, Board brd);
-        void initialization();
-        void setPlayer(Player player);
-        Player getPlayer();
-        void setBoard (Board brd);
-        Board getBoard();
-        bool checkWin();
-        void play(){
+        void initialization(){
             int baris, kolom, angka;
-            while(!brd.IsSolved()){
-                brd.PrintBoard();   //memanggil header board dan mengambil fungsi PrintBoard
+            while(!brd.IsFull()){
+                brd.initialization();   //memanggil header board dan mengambil fungsi initialization utk print board
                 cout <<"Masukkan baris, kolom, dan angka (0 untuk keluar)" <<endl;
                 cout <<"Baris : "; cin >> baris;
                 cout <<"Kolom : "; cin >> kolom;
@@ -31,26 +26,37 @@ class GameManager{
                     break;  //keluar dari permainan
                 }
 
-                if(brd.IsValidMove(baris - 1, kolom - 1, angka)){
-                    brd.setCellatCoordinate(baris -1, kolom - 1, angka);
+                if(brd.IsValidCell(baris - 1, kolom - 1, angka)){
+                    brd.setCellValue(baris -1, kolom - 1, angka);
                 }
                 else {
                     cout << "Angka sudah ada" << endl;
                 }
             }
-            if(brd.IsSolved()){
+        }
+        void setPlayer(Player player);
+        Player getPlayer();
+        Board getBoard();    
+        void setBoard (Board brd);
+        bool checkWin(){
+            if(brd.IsFull()){
                 cout << "Menang!" << endl;
+                p.getWinCount();
             }
             else {
                 cout << "Kalah" << endl;
             }
         }
+        void play(){
+            initialization();
+            checkWin();
+        }
         void savePlayerData();
         void saveBoardData();
         Board generateChallenge(){
+            //random angka 1-9 lalu dari angka yang muncul, mengambil file sesuai angka yang muncul
             string fileName = rand() % 9;
-            
-            return getBoardData();
+            return getBoardData(filename);
         }
 };
 
