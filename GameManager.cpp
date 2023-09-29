@@ -12,7 +12,7 @@ class GameManager{
         Data data;
 
     public :
-        GameManager(Player plyr, Board brd);
+        GameManager(Player player, Board board);
         void initialization(){
             int baris, kolom, angka;
             while(!brd.IsFull()){
@@ -35,9 +35,13 @@ class GameManager{
             }
         }
         void setPlayer(Player player);
-        Player getPlayer();
-        Board getBoard();    
-        void setBoard (Board brd);
+        Player getPlayer(){
+            return getPlayerData();
+        }
+        void setBoard (Board board);
+        Board getBoard(){
+            return getBoardData();
+        }
         bool checkWin(){
             if(brd.IsFull()){
                 cout << "Menang!" << endl;
@@ -48,6 +52,8 @@ class GameManager{
             }
         }
         void play(){
+            getPlayer();
+            getBoard();
             initialization();
             checkWin();
         }
