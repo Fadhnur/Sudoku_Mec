@@ -15,7 +15,7 @@ class GameManager{
         GameManager(Player player, Board board);
         void initialization(){
             int baris, kolom, angka;
-            while(!brd.IsFull()){
+            while(!brd.isFull()){
                 brd.initialization();   //memanggil header board dan mengambil fungsi initialization utk print board
                 cout <<"Masukkan baris, kolom, dan angka (0 untuk keluar)" <<endl;
                 cout <<"Baris : "; cin >> baris;
@@ -26,7 +26,7 @@ class GameManager{
                     break;  //keluar dari permainan
                 }
 
-                if(brd.IsValidCell(baris - 1, kolom - 1, angka)){
+                if(brd.isValidCell(baris - 1, kolom - 1, angka)){
                     brd.setCellValue(baris -1, kolom - 1, angka);
                 }
                 else {
@@ -34,16 +34,24 @@ class GameManager{
                 }
             }
         }
-        void setPlayer(Player player);
-        Player getPlayer(){
-            return getPlayerData();
+
+        void setPlayer(Player player){
+            //memanggil getPlayerData pada class data
         }
-        void setBoard (Board board);
+
+        Player getPlayer(){
+            return p;
+        }
+
+        void setBoard (Board board){
+            //memanggil getBoardData pada class data
+        }
+
         Board getBoard(){
-            return getBoardData();
+            return brd;
         }
         bool checkWin(){
-            if(brd.IsFull()){
+            if(brd.isFull()){
                 cout << "Menang!" << endl;
                 p.getWinCount();
             }
@@ -61,8 +69,9 @@ class GameManager{
         void saveBoardData();
         Board generateChallenge(){
             //random angka 1-9 lalu dari angka yang muncul, mengambil file sesuai angka yang muncul
-            string fileName = rand() % 9;
-            return getBoardData(filename);
+            int randomFile = rand() % 9 + 1;
+            string fileName = to_string(randomFile);
+            return data.getBoardData("filename");
         }
 };
 

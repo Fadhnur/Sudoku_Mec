@@ -1,6 +1,6 @@
-#include <iostream>
+#ifndef _PLAYER
+#define _PLAYER
 #include <string>
-using namespace std;
 
 class Player{
     private :
@@ -8,10 +8,12 @@ class Player{
     int WinCount;
 
     public : 
-    //Player();
-    //Player(string uname, int WinCounter);
+    Player();
+    Player(string uname, int WinCounter);
     void setUsername (string uname);
     string getUsername();
     void addWinCount();
     int getWinCount();
 };
+
+#endif

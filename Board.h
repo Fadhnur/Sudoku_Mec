@@ -1,16 +1,20 @@
+#ifndef _BOARD
+#define _BOARD
 
 class Board{
 	private:
-		int cells [9][9];
+		int cell [9][9];
 			
 	public:
 		Board();
 		void initialization();
-		void setCellValue(int x, int y, int value);
-		void getCellValue(int x, int y);
-		bool isValidCell();
+		int setCellValue(int x, int y, int value);
+		int getCellValue(int x, int y);
+		int isValidCell(int x, int y, int value);
 		bool isFull();
 		bool checkVertical(int index);
 		bool checkHorizontal(int index);
 		bool checkRegion(int index);
 };
+
+#endif

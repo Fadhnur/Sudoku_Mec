@@ -2,7 +2,12 @@
 #include "Player.h" //memanggil header
 using namespace std;
 
-void Player :: Player(string uname, int WinCounter){
+Player :: Player(){
+    string username = "";
+    int WinCount = 0;
+}
+
+Player :: Player(string uname, int WinCounter){
     username = uname;
     WinCount = WinCounter;
 }
