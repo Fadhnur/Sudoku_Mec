@@ -3,27 +3,27 @@
 using namespace std;
 
 Player :: Player(){     //tidak perlu menambahkan void
-    Name = " ";
-    WinCounter = 0;
+    username = " ";
+    WinCount = 0;
 }
 
-Player :: Player(string name, int WinC){
-    Name = name;
-    WinCounter = WinC;
+Player :: Player(string uname, int WinCounter){
+    username = uname;
+    WinCount = WinCounter;
 }
 
 void Player :: setName(string name){
-    Name = name;
+    username = name;
 }
 
 string Player ::getName(){
-    return Name;
+    return username;
 }
 
-void Player :: setWinCounter(){
-    WinCounter++;
+void Player :: addWinCount(){
+    WinCount++;
 }
 
-int Player :: getWinCounter(){
-    return WinCounter;
+int Player :: getWinCount(){
+    return WinCount;
 }
