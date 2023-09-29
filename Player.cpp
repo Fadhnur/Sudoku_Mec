@@ -2,10 +2,8 @@
 #include "Player.h" //memanggil header
 using namespace std;
 
-Player :: Player(){     //tidak perlu menambahkan void
-    username = " ";
-    WinCount = 0;
-}
+string username();
+int winCount();
 
 Player :: Player(string uname, int WinCounter){
     username = uname;
