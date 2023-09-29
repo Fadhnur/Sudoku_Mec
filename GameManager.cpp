@@ -1,5 +1,6 @@
 #include "Board.h"
 #include "Player.h"
+#include "Data.h"
 #include <iostream>
 
 using namespace std;
@@ -11,11 +12,12 @@ class GameManager{
 
     public :
         GameManager(Player plyr, Board brd);
+        void initialization();
         void setPlayer(Player player);
         Player getPlayer();
         void setBoard (Board brd);
         Board getBoard();
-
+        bool checkWin();
         void play(){
             int baris, kolom, angka;
             while(!brd.IsSolved()){
@@ -43,10 +45,13 @@ class GameManager{
                 cout << "Kalah" << endl;
             }
         }
-        void save();
-        void load();
-
-        bool checkWin();
+        void savePlayerData();
+        void saveBoardData();
+        Board generateChallenge(){
+            string fileName = rand() % 9;
+            
+            return getBoardData();
+        }
 };
 
 int main(){
