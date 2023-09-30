@@ -1,4 +1,4 @@
-#include "Data.h"
+#include "Data.hpp"
 #include <fstream>
 #include <string>
 #include <iostream>
@@ -26,7 +26,6 @@ Player Data :: getPlayerData(std::string file_address){
 
 Board Data :: getBoardData(std::string file_address){
     Board board;
-
     std::ifstream file(file_address);
     
     if(file.is_open()){
@@ -37,7 +36,7 @@ Board Data :: getBoardData(std::string file_address){
         file.close();
     }
     else{
-        std::cout<<"Gagal membuka file" << file_address << std::endl;
+        std::cout<< "Gagal membuka file" << file_address << std::endl;
     }
     
     return board;

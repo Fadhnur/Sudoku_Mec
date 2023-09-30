@@ -1,7 +1,15 @@
 #include <iostream>
-#include "Board.h"
+#include "Board.hpp"
 
 using namespace std;
+
+int Board::board(){
+    for(int i = 0; i < 9; ++i){
+        for(int j = 0; j < 9; ++j){
+            cell[i][j] = 0;
+        }
+    }
+}
 
 void Board :: initialization(){
     for (int i = 0; i < 9; ++i) {
