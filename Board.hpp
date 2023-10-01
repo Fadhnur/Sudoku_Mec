@@ -1,20 +1,25 @@
-#ifndef _BOARD
-#define _BOARD
+#ifndef BOARD_HPP
+#define BOARD_HPP
+
+#include <vector>
+#include "GameManager.hpp"
 
 class Board{
 	private:
-		int cell [9][9];
-			
+		int cell[9][9];
+		std::vector < std::vector<int>> papan;
+
 	public:
-		int board();
+		Board();
 		void initialization();
-		int setCellValue(int x, int y, int value);
+		void setCellValue(int x, int y, int value);
 		int getCellValue(int x, int y);
-		int isValidCell(int x, int y, int value);
+		bool isValidCell(int baris, int kolom, int value);
 		bool isFull();
-		bool checkVertical(int index);
-		bool checkHorizontal(int index);
+		bool checkVertical(int kolom);
+		bool checkHorizontal(int baris);
 		bool checkRegion(int index);
+		void setBoardData(const std::vector<std::vector<int>>& data);
 };
 
 #endif

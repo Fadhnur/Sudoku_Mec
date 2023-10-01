@@ -1,5 +1,5 @@
-#ifndef _GameManager
-#define _GameManager
+#ifndef GameManager_HPP
+#define GameManager_HPP
 
 #include "Board.hpp"
 #include "Player.hpp"
@@ -9,6 +9,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <ctime>
+#include <vector>
 
 using namespace std;
 
@@ -17,15 +18,33 @@ class GameManager{
         Player p;    //memanggil class dan memiliki nama objek "p"
         Board brd;   //memanggil class dan memiliki nama objek "brd"
         Data data;
+        std::vector < std::vector<int>> papan;
 
     public :
         GameManager(){
-
+            
         }
-        void initialization(){
+
+        void initialization(){      //mengubah file menjadi array
+            brd.initialization();
+        }
+
+        void setPlayer(Player& pl){  //player input
+            //meminta input data player
+            string uname;
+            cout << "Masukkan nama = "; cin >> uname;
+            cout << endl;
+            pl.setUsername(uname);
+        }
+
+        Player getPlayer(){ 
+            return p;
+        }
+
+        void setBoard (){     //menyiapkan papan
             int baris, kolom, angka;
             while(!brd.isFull()){
-                brd.initialization();   //memanggil header board dan mengambil fungsi initialization utk print board
+                initialization();   //memanggil header board dan mengambil fungsi initialization utk print board
                 cout <<"Masukkan baris, kolom, dan angka (0 untuk keluar)" <<endl;
                 cout <<"Baris : "; cin >> baris;
                 cout <<"Kolom : "; cin >> kolom;
@@ -44,23 +63,6 @@ class GameManager{
             }
         }
 
-        void setPlayer(Player& pl){  //player input
-            //meminta input data player
-            string uname;
-            cout << "Masukkan nama = "; cin >> uname;
-            cout << endl;
-            pl.setUsername(uname);
-        }
-
-        Player getPlayer(){ 
-            return p;
-        }
-
-        void setBoard (Board& brd){
-            //meyiapkan papan
-            generateChallenge();
-        }
-
         Board getBoard(){
             return brd;
         }
@@ -77,15 +79,22 @@ class GameManager{
             }
         }
 
-        void savePlayerData(Player p, string fileName){
-            Data dataPl;    
-            Player playerData = dataPl.getPlayerData(fileName);
+        bool isValidMove(int baris, int kolom, int angka){
+            if(angka < 1 || angka > 9){
+                return false;   //apabila angka yang dimasukkan kurang dari 1 / lebih dari 9 maka nilainya salah 
+            }
+            //memeriksa apakah sel tersedia dengan memanggil isCellAvailable
+            return brd.isValidCell(baris, kolom, angka);  //keadaan benar dan dimasukkan pada cells
+        }
+
+        void savePlayerData(Player p, string fileName){   
+            p = data.getPlayerData(fileName);
 
             ofstream file(fileName);
             if (file.is_open()) {
                 // Tulis data pemain ke dalam file
-                file << "Nama Pemain: " << playerData.getUsername() << endl;
-                file << "Skor: " << playerData.getWinCount() << endl;
+                file << "Nama Pemain: " << p.getUsername() << endl;
+                file << "Skor: " << p.getWinCount() << endl;
                 // Tambahkan data lainnya sesuai kebutuhan
                 file.close();
                 cout << "Data pemain telah disimpan ke dalam file " << fileName << endl;
@@ -110,7 +119,11 @@ class GameManager{
         void play(){
             Player pemain;
             setPlayer(pemain);
-            
+
+            GameManager game;
+            game.initialization();
+            setBoard();
+            //checkWin();
         }
 };
 

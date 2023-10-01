@@ -2,42 +2,57 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <vector>
 
-Player Data :: getPlayerData(std::string file_address){
-    Player player;
+using namespace std;
+
+Player Data::getPlayerData(string file_address){
+    Player plyr;
 
     //membuka file 
-    std::ifstream file(file_address);
+    ifstream file(file_address);
 
     if(file.is_open()){
-        std::string uname;
+        string uname;
         int WinCounter;
         file >> uname >> WinCounter;
-        player = Player(uname,WinCounter);
+        plyr = Player(uname, WinCounter);
         
         file.close();
     }
     else{
-        std::cout<<"Gagal membuka file" << file_address << std::endl;
+        cout << "Gagal membuka file" << file_address << endl;
     }
 
-    return player;
+    return plyr;
 }
 
-Board Data :: getBoardData(std::string file_address){
+Board Data::getBoardData(string file_address){      //membaca soal dari file
     Board board;
-    std::ifstream file(file_address);
-    
+    ifstream file(file_address);
+    vector < vector<int>> papan;
     if(file.is_open()){
-        std::string filename;
-        file >> filename;
-        board = Board();
-
+        for (int i = 0; i < 9; ++i) {    //menghitung banyak baris ke bawah
+            vector<int>row;   //mencetak baris angka masuk ke dalam vector
+            for (int j = 0; j < 9; ++j) {
+                int num;
+                file >> num;   //membaca angka dari file ke dalam variabel num (inputFile merupakan objek dari kelas ifstream)
+                row.push_back(num); //menambah angka ke dalam vektor baris
+            }
+            papan.push_back(row);   //menambah baris ke dalam vektor papan
+        }
         file.close();
+
+        board.setBoardData(papan);
     }
     else{
-        std::cout<< "Gagal membuka file" << file_address << std::endl;
+        cout << "Gagal membuka file" << file_address << endl;
     }
     
     return board;
+}
+
+bool Data::operator==(const Data& other) const
+{
+    return false;
 }

@@ -1,5 +1,5 @@
-#ifndef _PLAYER
-#define _PLAYER
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
 #include <string>
 
 using namespace std;
@@ -10,8 +10,8 @@ class Player{
         int WinCount;
 
     public : 
-        player();
-        player(string uname, int WinCounter);
+        Player();
+        Player(string uname, int WinCounter);
         
         void setUsername(string name);
         string getUsername();

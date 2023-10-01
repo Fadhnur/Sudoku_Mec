@@ -1,9 +1,11 @@
 #include <iostream>
 #include "Board.hpp"
+#include "Data.hpp"
+#include <vector>
 
 using namespace std;
 
-int Board::board(){
+Board::Board() {
     for(int i = 0; i < 9; ++i){
         for(int j = 0; j < 9; ++j){
             cell[i][j] = 0;
@@ -11,7 +13,15 @@ int Board::board(){
     }
 }
 
-void Board :: initialization(){
+void setBoardData(const std::vector<std::vector<int>>& data) {
+    for (int i = 0; i < 9; ++i) {
+        for (int j = 0; j < 9; ++j) {
+            cell[i][j] = data[i][j];
+        }
+    }
+}
+
+void Board :: initialization(){     //print 
     for (int i = 0; i < 9; ++i) {
         for (int j = 0; j < 9; ++j) {
             int num = getCellValue(i,j);      //koordinat disimpan pada variabel num
@@ -35,18 +45,19 @@ void Board :: initialization(){
     cout << endl;
 }
 
-int Board :: setCellValue(int baris, int kolom, int value){
-    cell [baris][kolom] = value;    //menaruh angka pada koordinat
+void Board :: setCellValue(int baris, int kolom, int value){
+    cell[baris][kolom] = value;    //menaruh angka pada koordinat
 }
 
 int Board :: getCellValue(int baris, int kolom){
-    return cell [baris][kolom];
+    return cell[baris][kolom];
 }
 
-int Board :: isValidCell(int baris, int kolom, int value){
+bool Board :: isValidCell(int baris, int kolom, int value){
+    Board brd;
     //memeriksa baris dan kolom
     for(int i = 0; i < 9; ++i){
-        if(cell [baris][i] == value || cell [i][kolom] == value){
+        if(cell[baris][i] == value || cell[i][kolom] == value){
             return false;   //ada angka yang sama di baris atau kolom
         }
     }
@@ -63,19 +74,15 @@ int Board :: isValidCell(int baris, int kolom, int value){
     }
     return true; // Tidak ada angka yang sama di baris, kolom, atau kotak 3x3
 
-    if(value < 1 || value > 9){
-        return false;   //apabila angka yang dimasukkan kurang dari 1 / lebih dari 9 maka nilainya salah 
-    }
-    //memeriksa apakah sel tersedia dengan memanggil isCellAvailable
-    return Board::setCellValue(baris, kolom, value);  //keadaan benar dan dimasukkan pada cells
-
 }
 
 
 bool Board :: checkHorizontal(int baris){   //cek baris
-    bool used[10] = {false};    //untuk angka 0-9, menggunakan elemen 0 untuk 0, elemen 1 untuk 1 dan seterusnya 
+    Board brd;
+    vector<bool> used(10, false);
+    //bool used[10] = {false};    //untuk angka 0-9, menggunakan elemen 0 untuk 0, elemen 1 untuk 1 dan seterusnya 
     for (int i = 0; i < 9; ++i){
-        int num = Board::getCellValue(baris, i);
+        int num = brd.getCellValue(baris, i);
         if(num != 0){
             if(used[num]){
                 return false;
@@ -87,9 +94,11 @@ bool Board :: checkHorizontal(int baris){   //cek baris
 }
 
 bool Board :: checkVertical(int kolom){     //cek kolom
-    bool used[10] = {false};    //untuk angka 0-9, menggunakan elemen 0 untuk 0, elemen 1 untuk 1 dan seterusnya 
+    Board brd;
+    vector<bool> used(10, false);
+    //bool used[10] = {false};    //untuk angka 0-9, menggunakan elemen 0 untuk 0, elemen 1 untuk 1 dan seterusnya 
     for (int i = 0; i < 9; ++i){
-        int num = Board::getCellValue(i, kolom);
+        int num = brd.getCellValue(i, kolom);
         if(num != 0){
             if(used[num]){
                 return false;
@@ -101,13 +110,16 @@ bool Board :: checkVertical(int kolom){     //cek kolom
 }
 
 bool Board :: checkRegion(int index){
+    Board brd;
+
     int startBaris = (index / 3) * 3;
     int startKolom = (index % 3) * 3;
 
+    vector<bool> used(10, false);
     for (int i = 0; i < 3; ++i) {
-        bool used[10] = {false};
+        //bool used[10] = {false};
         for (int j = 0; j < 3; ++j) {
-            int num = Board::getCellValue(startBaris + i, startKolom + j);
+            int num = brd.getCellValue(startBaris + i, startKolom + j);
             if (num != 0) {
                 if (used[num]) {
                     return false;
@@ -119,14 +131,12 @@ bool Board :: checkRegion(int index){
     return true;
 }
 
-bool Board :: isFull(){
+bool Board :: isFull(){     //sudoku selesai
     for(int i = 0; i < 9; ++i){ //menghitung baris
         for(int j = 0; j < 9; ++j){ //menghitung kolom
-            if(cell [i][j] == 0){
+            if(cell[i][j] == 0){
                 return false; //ada sel yang kosong, papan belum selesai
             }
-
-
         }
 
         if(!checkHorizontal(i) || !checkRegion(i) || !checkVertical(i)){   //mengecek baris, kolom, dan region 
