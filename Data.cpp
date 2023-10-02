@@ -1,58 +1,67 @@
 #include "Data.hpp"
+#include "Board.hpp"
 #include <fstream>
 #include <string>
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
-Player Data::getPlayerData(string file_address){
+Player Data::getPlayerData(string file_address) {
     Player plyr;
-
-    //membuka file 
     ifstream file(file_address);
 
-    if(file.is_open()){
+    if (file.is_open()) {
         string uname;
         int WinCounter;
         file >> uname >> WinCounter;
         plyr = Player(uname, WinCounter);
-        
         file.close();
     }
-    else{
+    else {
         cout << "Gagal membuka file" << file_address << endl;
     }
 
     return plyr;
 }
 
-Board Data::getBoardData(string file_address){      //membaca soal dari file
-    Board board;
-    ifstream file(file_address);
-    vector < vector<int>> papan;
-    if(file.is_open()){
-        for (int i = 0; i < 9; ++i) {    //menghitung banyak baris ke bawah
-            vector<int>row;   //mencetak baris angka masuk ke dalam vector
-            for (int j = 0; j < 9; ++j) {
-                int num;
-                file >> num;   //membaca angka dari file ke dalam variabel num (inputFile merupakan objek dari kelas ifstream)
-                row.push_back(num); //menambah angka ke dalam vektor baris
-            }
-            papan.push_back(row);   //menambah baris ke dalam vektor papan
-        }
+void Data::savePlayerData(Player p, string fileName) {
+    ifstream file(fileName);
+
+    if (file.is_open()) {
+        string uname;
+        int WinCounter;
+        file >> uname >> WinCounter;
         file.close();
 
-        board.setBoardData(papan);
+        ofstream outFile(fileName);
+
+        if (outFile.is_open()) {
+            outFile << p.getUsername() << " " << p.getWinCount() << endl;
+            outFile.close();
+        }
+        else {
+            cout << "Gagal membuka file " << fileName << endl;
+        }
     }
-    else{
-        cout << "Gagal membuka file" << file_address << endl;
+    else {
+        cout << "Gagal membuka file " << fileName << endl;
     }
-    
-    return board;
 }
 
-bool Data::operator==(const Data& other) const
-{
-    return false;
+int Data::getBoardData(string file_address, int data[9][9]) {
+    ifstream file(file_address);
+
+    if (file.is_open()) {
+        for (int i = 0; i < 9; ++i) {
+            for (int j = 0; j < 9; ++j) {
+                file >> data[i][j];
+            }
+        }
+        file.close();
+        return 0;
+    }
+    else {
+        cout << "Gagal membuka file" << file_address << endl;
+        return -1;
+    }
 }

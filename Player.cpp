@@ -3,26 +3,27 @@
 #include "Player.hpp" //memanggil header
 using namespace std;
 
-Player::Player() : username(""), WinCount(0) {
-    
+Player::Player() {
+    username = "";
+    WinCount = 0;
 }
 
-Player::Player(string uname, int WinCounter) : username(uname), WinCount(WinCounter){
-    
+Player::Player(string uname, int WinCounter) : username(uname), WinCount(WinCounter) {
+
 }
 
-void Player::setUsername(string name){
+void Player::setUsername(string name) {
     username = name;
 }
 
-string Player::getUsername(){
+string Player::getUsername() {
     return username;
 }
 
-void Player::addWinCount(){
+void Player::addWinCount() {
     WinCount++;
 }
- 
-int Player::getWinCount(){
+
+int Player::getWinCount() {
     return WinCount;
 }

@@ -7,13 +7,11 @@
 #include "Board.hpp"
 
 
-class Data{
-    public :
-        Player getPlayerData(std::string file_address);
-        Board getBoardData(std::string file_address);
-
-        Data() = default;
-        bool operator==(const Data& other) const;
+class Data {
+public:
+    Player getPlayerData(string file_address);
+    void savePlayerData(Player p, string fileName);
+    int getBoardData(string file_address, int data[9][9]);
 };
 
 #endif
